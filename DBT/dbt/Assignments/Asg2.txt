@@ -2,7 +2,8 @@ Asg2
 
 Question 1 
 
--> Cnum should be "primary key" because that needs to be unique for each customers
+-> Cnum should be "primary key" because that needs to be unique for each customers.
+A column should be a primary key in a table to uniquely identify each row in the table and to ensure that there is no redundant data. 
 
 Question 2
 
