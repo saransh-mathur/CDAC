@@ -1,0 +1,259 @@
+mysql> SELECT * FROM ORDERS WHERE Amt > 1000;
++------+---------+------------+------+------+
+| Onum | Amt     | Odate      | Cnum | Snum |
++------+---------+------------+------+------+
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3008 | 4723.00 | 1990-10-05 | 2006 | 1001 |
+| 3010 | 1309.95 | 1990-10-06 | 2004 | 1002 |
+| 3011 | 9891.88 | 1990-10-06 | 2006 | 1001 |
++------+---------+------------+------+------+
+7 rows in set (0.01 sec)
+
+mysql> SELECT * FROM ORDERS WHERE Amt >= 1000;
++------+---------+------------+------+------+
+| Onum | Amt     | Odate      | Cnum | Snum |
++------+---------+------------+------+------+
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3008 | 4723.00 | 1990-10-05 | 2006 | 1001 |
+| 3010 | 1309.95 | 1990-10-06 | 2004 | 1002 |
+| 3011 | 9891.88 | 1990-10-06 | 2006 | 1001 |
++------+---------+------------+------+------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Salespeople WHERE City = London and Comm > .10 ;
+ERROR 1054 (42S22): Unknown column 'London' in 'where clause'
+mysql> SELECT * FROM Salespeople WHERE City is London and Comm > .10 ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'London and Comm > .10' at line 1
+mysql> SELECT * FROM Salespeople WHERE City = 'London' and Comm > .10 ;
++------+--------+--------+------+
+| Snum | Sname  | City   | Comm |
++------+--------+--------+------+
+| 1001 | Peel   | London | 0.12 |
+| 1004 | Motika | London | 0.11 |
++------+--------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM CUSTOMERS WHERE rating <=100 and City = 'Rome';
++------+---------+------+--------+------+
+| Cnum | Cname   | City | Rating | Snum |
++------+---------+------+--------+------+
+| 2007 | Pereira | Rome |    100 | 1004 |
++------+---------+------+--------+------+
+1 row in set (0.01 sec)
+
+mysql> Select * from Orders where (Amt < 1000 OR )
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> Select * from Orders
+    ->          where ( Amt < 1000 OR
+    ->                  NOT (Odate = '1990-10-03'
+    ->                          AND Cnum > 2003));
++------+---------+------------+------+------+
+| Onum | Amt     | Odate      | Cnum | Snum |
++------+---------+------------+------+------+
+| 3001 |   18.69 | 1990-10-03 | 2008 | 1007 |
+| 3003 |  767.19 | 1990-10-03 | 2001 | 1001 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3007 |   75.75 | 1990-10-04 | 2004 | 1002 |
+| 3008 | 4723.00 | 1990-10-05 | 2006 | 1001 |
+| 3010 | 1309.95 | 1990-10-06 | 2004 | 1002 |
+| 3011 | 9891.88 | 1990-10-06 | 2006 | 1001 |
++------+---------+------------+------+------+
+8 rows in set (0.01 sec)
+
+mysql> Select * from Orders
+    ->          where NOT ((odate = '1990 - 10 - 03' OR Snum
+    ->                  >1006) AND Amt >= 1500);
+ERROR 1525 (HY000): Incorrect DATE value: '1990 - 10 - 03'
+mysql> Select * from Orders
+    ->          where NOT ((Odate = '1990 - 10 - 03' OR Snum
+    ->                  >1006) AND Amt >= 1500);
+ERROR 1525 (HY000): Incorrect DATE value: '1990 - 10 - 03'
+mysql> Select * from Orders
+    ->          where NOT ((odate = 1990 - 10 - 03 OR Snum
+    ->                  >1006) AND Amt >= 1500);
++------+---------+------------+------+------+
+| Onum | Amt     | Odate      | Cnum | Snum |
++------+---------+------------+------+------+
+| 3001 |   18.69 | 1990-10-03 | 2008 | 1007 |
+| 3003 |  767.19 | 1990-10-03 | 2001 | 1001 |
+| 3002 | 1900.10 | 1990-10-03 | 2007 | 1004 |
+| 3005 | 5160.45 | 1990-10-03 | 2003 | 1002 |
+| 3006 | 1098.16 | 1990-10-03 | 2008 | 1007 |
+| 3009 | 1713.23 | 1990-10-04 | 2002 | 1003 |
+| 3007 |   75.75 | 1990-10-04 | 2004 | 1002 |
+| 3008 | 4723.00 | 1990-10-05 | 2006 | 1001 |
+| 3010 | 1309.95 | 1990-10-06 | 2004 | 1002 |
+| 3011 | 9891.88 | 1990-10-06 | 2006 | 1001 |
++------+---------+------------+------+------+
+10 rows in set, 1 warning (0.01 sec)
+
+mysql> Select Snum , Sname , City , Comm from Salespeople
+    -> where (Comm > .12 OR Comm < .14);
++------+---------+-----------+------+
+| Snum | Sname   | City      | Comm |
++------+---------+-----------+------+
+| 1001 | Peel    | London    | 0.12 |
+| 1002 | Serres  | San Jose  | 0.13 |
+| 1004 | Motika  | London    | 0.11 |
+| 1007 | Rifkin  | Barcelona | 0.15 |
+| 1003 | Axelrod | New York  | 0.10 |
++------+---------+-----------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from Salespeople;
++------+---------+-----------+------+
+| Snum | Sname   | City      | Comm |
++------+---------+-----------+------+
+| 1001 | Peel    | London    | 0.12 |
+| 1002 | Serres  | San Jose  | 0.13 |
+| 1004 | Motika  | London    | 0.11 |
+| 1007 | Rifkin  | Barcelona | 0.15 |
+| 1003 | Axelrod | New York  | 0.10 |
++------+---------+-----------+------+
+5 rows in set (0.00 sec)
+
+mysql> select snum from SalesPeople where Comm < .13;
++------+
+| snum |
++------+
+| 1001 |
+| 1004 |
+| 1003 |
++------+
+3 rows in set (0.00 sec)
+
+mysql> select Snum, Sname, City, Comm from Salespeople where(Comm > .12 OR Comm <.14);
++------+---------+-----------+------+
+| Snum | Sname   | City      | Comm |
++------+---------+-----------+------+
+| 1001 | Peel    | London    | 0.12 |
+| 1002 | Serres  | San Jose  | 0.13 |
+| 1004 | Motika  | London    | 0.11 |
+| 1007 | Rifkin  | Barcelona | 0.15 |
+| 1003 | Axelrod | New York  | 0.10 |
++------+---------+-----------+------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM SALESPEOPLE WHERE COMM NOT BETWEEN .12 AND 0.14;
++------+---------+-----------+------+
+| Snum | Sname   | City      | Comm |
++------+---------+-----------+------+
+| 1001 | Peel    | London    | 0.12 |
+| 1004 | Motika  | London    | 0.11 |
+| 1007 | Rifkin  | Barcelona | 0.15 |
+| 1003 | Axelrod | New York  | 0.10 |
++------+---------+-----------+------+
+4 rows in set (0.00 sec)
+
+mysql> select Snum, Sname, City, Comm from Salespeople where(Comm > 0.12 OR Comm < 0.14);
++------+---------+-----------+------+
+| Snum | Sname   | City      | Comm |
++------+---------+-----------+------+
+| 1001 | Peel    | London    | 0.12 |
+| 1002 | Serres  | San Jose  | 0.13 |
+| 1004 | Motika  | London    | 0.11 |
+| 1007 | Rifkin  | Barcelona | 0.15 |
+| 1003 | Axelrod | New York  | 0.10 |
++------+---------+-----------+------+
+5 rows in set (0.00 sec)
+
+mysql> select Snum, Sname, City, Comm from Salespeople where(Comm > .12 AND Comm <.14);
++------+--------+----------+------+
+| Snum | Sname  | City     | Comm |
++------+--------+----------+------+
+| 1002 | Serres | San Jose | 0.13 |
++------+--------+----------+------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM SALESPEOPLE WHERE COMM NOT BETWEEN .12 AND 0.14;
++------+---------+-----------+------+
+| Snum | Sname   | City      | Comm |
++------+---------+-----------+------+
+| 1001 | Peel    | London    | 0.12 |
+| 1004 | Motika  | London    | 0.11 |
+| 1007 | Rifkin  | Barcelona | 0.15 |
+| 1003 | Axelrod | New York  | 0.10 |
++------+---------+-----------+------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT Snum, Sname, City, Comm FROM SALESPEOPLE WHERE COMM NOT BETWEEN .12 AND 0.14;
++------+---------+-----------+------+
+| Snum | Sname   | City      | Comm |
++------+---------+-----------+------+
+| 1001 | Peel    | London    | 0.12 |
+| 1004 | Motika  | London    | 0.11 |
+| 1007 | Rifkin  | Barcelona | 0.15 |
+| 1003 | Axelrod | New York  | 0.10 |
++------+---------+-----------+------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT snum,
+    ->        sname,
+    ->        city,
+    ->        comm
+    -> FROM Salespeople
+    -> WHERE (comm > .
+    ->   SELECT snum,
+    ->          sname,
+    ->          city,
+    ->          comm
+    ->   FROM salespeople WHERE comm =.13;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.
+  SELECT snum,
+         sname,
+         city,
+         comm
+  FROM salespeople' at line 6
+mysql> SELECT snum,
+    ->        sname,
+    ->        city,
+    ->        comm
+    -> FROM Salespeople
+    -> WHERE (comm > .
+    ->   SELECT snum,
+    ->          sname,
+    ->          city,
+    ->          comm
+    ->   FROM salespeople WHERE comm =.13;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.
+  SELECT snum,
+         sname,
+         city,
+         comm
+  FROM salespeople' at line 6
+mysql> SELECT snum,
+    ->          sname,
+    ->          city,
+    ->          comm
+    ->   FROM salespeople WHERE comm =.13 OR comm = .14;
++------+--------+----------+------+
+| snum | sname  | city     | comm |
++------+--------+----------+------+
+| 1002 | Serres | San Jose | 0.13 |
++------+--------+----------+------+
+1 row in set (0.00 sec)
+
+mysql> SELECT snum,
+    ->        sname,
+    ->        city,
+    ->        comm
+    -> FROM Salespeople
+    -> WHERE (comm > .12 OR comm < .14);
++------+---------+-----------+------+
+| snum | sname   | city      | comm |
++------+---------+-----------+------+
+| 1001 | Peel    | London    | 0.12 |
+| 1002 | Serres  | San Jose  | 0.13 |
+| 1004 | Motika  | London    | 0.11 |
+| 1007 | Rifkin  | Barcelona | 0.15 |
+| 1003 | Axelrod | New York  | 0.10 |
++------+---------+-----------+------+
+5 rows in set (0.00 sec)
