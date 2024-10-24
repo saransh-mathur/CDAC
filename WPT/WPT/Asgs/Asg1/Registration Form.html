@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d9eaf7; 
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100%;
+            box-sizing: border-box;
+            overflow-y: auto; 
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px; 
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 90%; 
+            max-width: 900px; 
+            box-sizing: border-box;
+            margin-top: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+            position: relative;
+            font-weight: bold; 
+            text-decoration: underline; 
+        }
+        .registration-date-input {
+            margin-bottom: 30px; 
+            text-align: right;
+        }
+        .registration-date-input input[type="date"] {
+            width: 150px; 
+            float: right;
+            padding: 5px;
+            font-size: 14px;
+        }
+        .personal-info-box {
+            background-color: #eaf4fd; 
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px; 
+        }
+        .personal-info-box h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold; 
+            text-decoration: underline; 
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="email"], input[type="password"], input[type="tel"], input[type="date"], textarea, select {
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #3498db; 
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+        input[type="submit"]:hover {
+            background-color: #2980b9; 
+        }
+        .gender-radio {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .gender-radio label {
+            margin: 0;
+            font-size: 16px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            input[type="submit"] {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Registration Form</h2>
+        <div class="registration-date-input">
+            <label for="reg-date">Date of Registration:</label>
+            <input type="date" id="reg-date" name="registration_date" required>
+        </div>
+
+        <div class="personal-info-box">
+            <h3>Personal Information</h3>
+            <form action="/submit_registration" method="post">
+                <label for="fname">First Name:</label>
+                <input type="text" id="fname" name="firstname" required>
+
+                <label for="lname">Last Name:</label>
+                <input type="text" id="lname" name="lastname" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+
+                <label for="mobile">Mobile Number:</label>
+                <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" placeholder="Enter 10-digit mobile number" required>
+
+                <label for="address">Address:</label>
+                <textarea id="address" name="address" rows="4" placeholder="Enter your address" required></textarea>
+
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required>
+
+                <label for="pincode">Pin Code:</label>
+                <input type="text" id="pincode" name="pincode" pattern="[0-9]{6}" placeholder="Enter 6-digit pin code" required>
+
+                <label for="gender">Gender:</label>
+                <div class="gender-radio">
+                    <input type="radio" id="male" name="gender" value="Male" required>
+                    <label for="male">Male</label>
+
+                    <input type="radio" id="female" name="gender" value="Female" required>
+                    <label for="female">Female</label>
+                </div>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+
+                <input type="submit" value="Register">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
